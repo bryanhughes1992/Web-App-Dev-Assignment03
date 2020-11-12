@@ -7,6 +7,11 @@ namespace ASSIGNMENT03_BRYANHUGHES.Models
 {
     public class Teacher
     {
-
+        public int TeacherId;
+        public string TeacherFname;
+        public string TeacherLname;
+        public string EmployeeNumber;
+        public DateTime HireDate;
+        public double Salary;
     }
 }
