@@ -15,15 +15,15 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
             return View();
         }
 
-        //GET : /Author/List
+        //GET : /Teacher/List
         public ActionResult List()
         {
             TeacherDataController controller = new TeacherDataController();
-            IEnumerable<Teacher> Authors = controller.ListTeachers();
-            return View(Authors);
+            IEnumerable<Teacher> Teachers = controller.ListTeachers();
+            return View(Teachers);
         }
 
-        //GET : /Author/Show/{id}
+        //GET : /Teacher/Show/{id}
         public ActionResult Show(int id)
         {
             TeacherDataController controller = new TeacherDataController();

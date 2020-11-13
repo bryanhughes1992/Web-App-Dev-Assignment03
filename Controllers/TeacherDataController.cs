@@ -34,7 +34,7 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "Select * from Teachers where lower(teacherfname) like lower(@key) or lower(teacherlname) like lower(@key) or lower(concat(teacherfname, ' ', teacherlname)) like lower(@key)";
+            cmd.CommandText = "Select * from Teachers";
 
             //Gather Result Set of Query into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
@@ -51,15 +51,17 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
                 string TeacherLname = (string)ResultSet["teacherlname"];
                 string EmployeeNumber = (string)ResultSet["employeenumber"];
                 DateTime HireDate = (DateTime)ResultSet["hiredate"];
-                double Salary = (double)ResultSet["salary"];
+                decimal Salary = (decimal)ResultSet["salary"];
 
-                Teacher NewTeacher = new Teacher();
-                NewTeacher.TeacherId = TeacherId;
-                NewTeacher.TeacherFname = TeacherFname;
-                NewTeacher.TeacherLname = TeacherLname;
-                NewTeacher.EmployeeNumber = EmployeeNumber;
-                NewTeacher.HireDate = HireDate;
-                NewTeacher.Salary = Salary;
+                Teacher NewTeacher = new Teacher
+                {
+                    TeacherId = TeacherId,
+                    TeacherFname = TeacherFname,
+                    TeacherLname = TeacherLname,
+                    EmployeeNumber = EmployeeNumber,
+                    HireDate = HireDate,
+                    Salary = Salary
+                };
 
                 //Add the Author Name to the List
                 Teachers.Add(NewTeacher);
@@ -87,9 +89,7 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "Select * from Authors where teacherid = @id";
-            cmd.Parameters.AddWithValue("@id", id);
-            cmd.Prepare();
+            cmd.CommandText = "Select * from teachers where teacherid = " + id;
 
             //Gather Result Set of Query into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
@@ -102,7 +102,7 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
                 string TeacherLname = (string)ResultSet["teacherlname"];
                 string EmployeeNumber = (string)ResultSet["employeenumber"];
                 DateTime HireDate = (DateTime)ResultSet["hiredate"];
-                double Salary = (double)ResultSet["salary"];
+                decimal Salary = (decimal)ResultSet["salary"];
 
                 NewTeacher.TeacherId = TeacherId;
                 NewTeacher.TeacherFname = TeacherFname;
