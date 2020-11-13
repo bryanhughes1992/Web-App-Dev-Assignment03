@@ -7,6 +7,8 @@ using System.Web.Http;
 using ASSIGNMENT03_BRYANHUGHES.Models;
 using MySql.Data.MySqlClient;
 
+// SOME CODE WAS USED FROM CHRSTINE BITTLE @ https://github.com/christinebittle/BlogProject_1.git
+
 namespace ASSIGNMENT03_BRYANHUGHES.Controllers
 {
     public class TeacherDataController : ApiController
@@ -17,11 +19,12 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
         /// <summary>
         /// Returns a list of teachers in the system
         /// </summary>
-        /// <example>GET api/AuthorData/ListAuthors</example>
+        /// <example>GET api/TeacherData/ListTeachers</example>
         /// <returns>
-        /// A list of authors (first names and last names)
+        /// A list of teachers (first names and last names)
         /// </returns>
         [HttpGet]
+        [Route("api/TeacherData/ListTeachers")]
         public IEnumerable<Teacher> ListTeachers()
         {
             //Create an instance of a connection

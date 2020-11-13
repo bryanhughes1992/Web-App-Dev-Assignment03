@@ -5,17 +5,21 @@ using System.Web;
 using System.Web.Mvc;
 using ASSIGNMENT03_BRYANHUGHES.Models;
 
+// SOME CODE WAS USED FROM CHRSTINE BITTLE @ https://github.com/christinebittle/BlogProject_1.git
+
 namespace ASSIGNMENT03_BRYANHUGHES.Controllers
 {
     public class TeacherController : Controller
     {
-        // GET: Teacher
+        [HttpGet]
+        [Route("api/Teacher")]
         public ActionResult Index()
         {
             return View();
         }
 
-        //GET : /Teacher/List
+        [HttpGet]
+        [Route("api/Teacher/List")]
         public ActionResult List()
         {
             TeacherDataController controller = new TeacherDataController();
@@ -23,13 +27,12 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
             return View(Teachers);
         }
 
-        //GET : /Teacher/Show/{id}
+        [HttpGet]
+        [Route("api/Teacher/Show/{id}")]
         public ActionResult Show(int id)
         {
             TeacherDataController controller = new TeacherDataController();
             Teacher NewTeacher = controller.FindTeacher(id);
-
-
             return View(NewTeacher);
         }
     }
