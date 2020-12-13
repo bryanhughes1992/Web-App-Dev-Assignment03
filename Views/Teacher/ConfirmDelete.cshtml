@@ -1,0 +1,17 @@
+﻿@Model ASSIGNMENT03_BRYANHUGHES.Models.Teacher
+@{
+    ViewBag.Title = "ConfirmDelete";
+}
+
+<h2>Confirm Delete</h2>
+
+<p>Are you sure you want to delete @Model.TeacherFname @Model.TeacherLname</p>
+<p>Teacher ID: @Model.TeacherId</p>
+<p>Employee Number: @Model.EmployeeNumber</p>
+<p>Hire Date: @Model.HireDate</p>
+
+<form method="post" action="/Teacher/Delete/@Model.TeacherId">
+    <input type="submit" value="Yes">
+    <a href="/Teacher/Show/@Model.TeacherId">Back to teacher</a>
+</form>
+

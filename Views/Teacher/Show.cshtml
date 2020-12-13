@@ -1,4 +1,4 @@
-﻿@model ASSIGNMENT03_BRYANHUGHES.Models.Teacher
+﻿@Model ASSIGNMENT03_BRYANHUGHES.Models.Teacher
 @{
     ViewBag.Title = "Show";
 }
@@ -9,5 +9,9 @@
     <p>Employee Number: @Model.EmployeeNumber</p>
     <p>Hire Date: @Model.HireDate</p>
     <p>Salary: $@Model.Salary / hour</p>
+
+    <form action="/Teacher/ConfirmDelete/@Model.TeacherId" method="POST">
+        <button>Delete</button>
+    </form>
 </div>
 

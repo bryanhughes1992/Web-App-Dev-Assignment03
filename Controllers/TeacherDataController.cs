@@ -119,5 +119,55 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
             return NewTeacher;
         }
 
+        public int DeleteTeacher(int id)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL QUERY
+            cmd.CommandText = "DELETE FROM teachers WHERE teacherid=" + id + ";";
+
+            int result = cmd.ExecuteNonQuery();
+
+            return result;
+        }
+
+        public void AddTeacher(Teacher teacher)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string command = "INSERT INTO teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) VALUES ( \""
+                + teacher.TeacherFname + "\", "
+                + teacher.TeacherLname + "\", \""
+                + teacher.EmployeeNumber + "\", \""
+                + teacher.HireDate.ToString( "yyyy-MM-dd HH-mm-ss" ) + "\", "
+                + teacher.Salary + " );";
+
+            Console.WriteLine(command);
+
+            //SQL QUERY
+            cmd.CommandText = "INSERT INTO teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) VALUES ( \""
+                + teacher.TeacherFname + "\", "
+                + teacher.TeacherLname + "\", \""
+                + teacher.EmployeeNumber + "\", \""
+                + teacher.HireDate.ToString("yyyy-MM-dd HH-mm-ss" ) + "\", "
+                + teacher.Salary + " );";
+                
+            cmd.ExecuteNonQuery();
+        }
+
     }
 }
