@@ -138,7 +138,7 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
             return result;
         }
 
-        public void AddTeacher(Teacher teacher)
+        public void AddTeacher( Teacher teacher )
         {
             //Create an instance of a connection
             MySqlConnection Conn = School.AccessDatabase();
@@ -149,25 +149,15 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
             //Establish a new command (query) for our database
             MySqlCommand cmd = Conn.CreateCommand();
 
-            string command = "INSERT INTO teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) VALUES ( \""
-                + teacher.TeacherFname + "\", "
+            //SQL QUERY
+            cmd.CommandText = "INSERT INTO `teachers`(`teacherfname`, `teacherlname`, `employeenumber`, `hiredate`, `salary`) VALUES ( \""
+                + teacher.TeacherFname + "\", \""
                 + teacher.TeacherLname + "\", \""
                 + teacher.EmployeeNumber + "\", \""
                 + teacher.HireDate.ToString( "yyyy-MM-dd HH-mm-ss" ) + "\", "
-                + teacher.Salary + " );";
+                + teacher.Salary + ");";
 
-            Console.WriteLine(command);
-
-            //SQL QUERY
-            cmd.CommandText = "INSERT INTO teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) VALUES ( \""
-                + teacher.TeacherFname + "\", "
-                + teacher.TeacherLname + "\", \""
-                + teacher.EmployeeNumber + "\", \""
-                + teacher.HireDate.ToString("yyyy-MM-dd HH-mm-ss" ) + "\", "
-                + teacher.Salary + " );";
-                
             cmd.ExecuteNonQuery();
         }
-
     }
 }
