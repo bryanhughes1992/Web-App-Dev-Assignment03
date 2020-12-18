@@ -11,7 +11,7 @@ namespace ASSIGNMENT03_BRYANHUGHES.Models
         public string TeacherFname;
         public string TeacherLname;
         public string EmployeeNumber;
-        public DateTime HireDate;
+        // public DateTime HireDate;
         public decimal Salary;
     }
 }

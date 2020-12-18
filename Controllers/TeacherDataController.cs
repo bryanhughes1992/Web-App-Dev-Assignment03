@@ -42,7 +42,7 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
             //Gather Result Set of Query into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
-            //Create an empty list of Authors
+            //Create an empty list of Teachers
             List<Teacher> Teachers = new List<Teacher> { };
 
             //Loop Through Each Row the Result Set
@@ -53,7 +53,7 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
                 string TeacherFname = (string)ResultSet["teacherfname"];
                 string TeacherLname = (string)ResultSet["teacherlname"];
                 string EmployeeNumber = (string)ResultSet["employeenumber"];
-                DateTime HireDate = (DateTime)ResultSet["hiredate"];
+                // DateTime HireDate = (DateTime)ResultSet["hiredate"];
                 decimal Salary = (decimal)ResultSet["salary"];
 
                 Teacher NewTeacher = new Teacher
@@ -62,7 +62,7 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
                     TeacherFname = TeacherFname,
                     TeacherLname = TeacherLname,
                     EmployeeNumber = EmployeeNumber,
-                    HireDate = HireDate,
+                    // HireDate = HireDate,
                     Salary = Salary
                 };
 
@@ -104,14 +104,14 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
                 string TeacherFname = (string)ResultSet["teacherfname"];
                 string TeacherLname = (string)ResultSet["teacherlname"];
                 string EmployeeNumber = (string)ResultSet["employeenumber"];
-                DateTime HireDate = (DateTime)ResultSet["hiredate"];
+                //DateTime HireDate = (DateTime)ResultSet["hiredate"];
                 decimal Salary = (decimal)ResultSet["salary"];
 
                 NewTeacher.TeacherId = TeacherId;
                 NewTeacher.TeacherFname = TeacherFname;
                 NewTeacher.TeacherLname = TeacherLname;
                 NewTeacher.EmployeeNumber = EmployeeNumber;
-                NewTeacher.HireDate = HireDate;
+                // NewTeacher.HireDate = HireDate;
                 NewTeacher.Salary = Salary;
             }
 
@@ -119,8 +119,24 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
             return NewTeacher;
         }
 
-        public int DeleteTeacher(int id)
+        public void DeleteTeacher(int id)
         {
+            //Create an instance of a connection
+            // MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            // Conn.Open();
+
+            //Establish a new command (query) for our database
+            // MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL QUERY
+            //cmd.CommandText = "DELETE FROM teachers WHERE teacherid=" + id + ";";
+
+            //int result = cmd.ExecuteNonQuery();
+
+            //return result;
+
             //Create an instance of a connection
             MySqlConnection Conn = School.AccessDatabase();
 
@@ -131,11 +147,16 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "DELETE FROM teachers WHERE teacherid=" + id + ";";
 
-            int result = cmd.ExecuteNonQuery();
+            cmd.CommandText = "Delete from teachers where teacherid=@id";
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
 
-            return result;
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+
+
         }
 
         public void AddTeacher( Teacher teacher )
@@ -150,14 +171,43 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "INSERT INTO `teachers`(`teacherfname`, `teacherlname`, `employeenumber`, `hiredate`, `salary`) VALUES ( \""
+            cmd.CommandText = "INSERT INTO `teachers`(`teacherfname`, `teacherlname`, `employeenumber`, `salary`) VALUES ( \""
                 + teacher.TeacherFname + "\", \""
                 + teacher.TeacherLname + "\", \""
                 + teacher.EmployeeNumber + "\", \""
-                + teacher.HireDate.ToString( "yyyy-MM-dd HH-mm-ss" ) + "\", "
+                // + teacher.HireDate.ToString( "yyyy-MM-dd HH-mm-ss" ) + "\", "
                 + teacher.Salary + ");";
 
             cmd.ExecuteNonQuery();
         }
+
+        [HttpPost]
+        public void UpdateTeacher(int id, [FromBody] Teacher TeacherInfo)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL QUERY
+
+            cmd.CommandText = "update teachers set teacherfname=@TeacherFname, teacherlname=@TeacherLname, employeenumber=@EmployeeNumber, salary=@Salary where teacherid=@TeacherId";
+            cmd.Parameters.AddWithValue("@TeacherFname", TeacherInfo.TeacherFname);
+            cmd.Parameters.AddWithValue("@TeacherLname", TeacherInfo.TeacherLname);
+            cmd.Parameters.AddWithValue("@EmployeeNumber", TeacherInfo.EmployeeNumber);
+            //cmd.Parameters.AddWithValue("@HireDate", TeacherInfo.HireDate);
+            cmd.Parameters.AddWithValue("@Salary", TeacherInfo.Salary);
+            cmd.Parameters.AddWithValue("@TeacherId", id);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+
     }
 }

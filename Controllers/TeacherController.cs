@@ -50,7 +50,7 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
         public ActionResult Delete(int id)
         {
             TeacherDataController controller = new TeacherDataController();
-            int result = controller.DeleteTeacher(id);
+            controller.DeleteTeacher(id);
             return RedirectToAction("List");
         }
 
@@ -62,20 +62,50 @@ namespace ASSIGNMENT03_BRYANHUGHES.Controllers
         }
 
         [HttpPost]
-        [Route("api/Teacher/Create/{firstName}/{lastName}/{employeeNumber}/{hireDate}/{salary}")]
-        public ActionResult Create(string firstName, string lastName, string employeeNumber, string hireDate, decimal salary)
+        [Route("api/Teacher/Create/{firstName}/{lastName}/{employeeNumber}/{salary}")]
+        public ActionResult Create(string firstName, string lastName, string employeeNumber, /*string hireDate,*/ decimal salary)
         {
             Teacher teacher = new Teacher();
-            teacher.TeacherFname =  firstName;
+            teacher.TeacherFname = firstName;
             teacher.TeacherLname = lastName;
             teacher.EmployeeNumber = employeeNumber;
             teacher.Salary = salary;
 
-            teacher.HireDate = Convert.ToDateTime( hireDate );
+            //teacher.HireDate = Convert.ToDateTime( hireDate );
             TeacherDataController controller = new TeacherDataController();
 
-            controller.AddTeacher( teacher );
+            controller.AddTeacher(teacher);
             return RedirectToAction("List");
+        }
+
+        [HttpGet]
+        public ActionResult Update(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher SelectedTeacher = controller.FindTeacher(id);
+
+
+            return View(SelectedTeacher);
+        }
+
+        [HttpPost]
+        public ActionResult Update(int id, string TeacherFname, string TeacherLname, /*DateTime HireDate,*/ decimal Salary, string EmployeeNumber)
+        {
+            Teacher TeacherInfo = new Teacher();
+            TeacherInfo.TeacherFname = TeacherFname;
+            TeacherInfo.TeacherLname = TeacherLname;
+            //TeacherInfo.HireDate = HireDate;
+            TeacherInfo.Salary = Salary;
+            TeacherInfo.EmployeeNumber = EmployeeNumber;
+     
+
+            TeacherDataController controller = new TeacherDataController();
+            controller.UpdateTeacher(id, TeacherInfo);
+
+          
+
+
+            return RedirectToAction("Show/" + id);
         }
     }
 }
